@@ -1,5 +1,7 @@
 <?php
 
+require_once 'includes/filter-wrapper.php';
+
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
 if (empty($id)) {
@@ -13,7 +15,7 @@ require_once 'includes/db.php';
 
 // ->prepare() allows us to execute SQL with user input
 $sql = $db->prepare('
-	SELECT id, Titles, Dates, Director
+	SELECT id, title, date, director
 	FROM Movies
 	WHERE id = :id
 ');
@@ -41,13 +43,14 @@ if (empty($results)) {
 <html>
 <head>
 	<meta charset="utf-8">
-	<title><?php echo $results['Title']; ?> &middot; Movies</title>
+	<title><?php echo $results['title']; ?> &middot; Movies</title>
+	<link href="css/general.css" rel="stylesheet">
 </head>
 <body>
 	
-	<h1><?php echo $results['Title']; ?></h1>
-	<p>Date: <?php echo $results['Date']; ?></p>
-	<p>Director: <?php echo $results['Director']; ?></p>
+	<h1><?php echo $results['title']; ?></h1>
+	<p>Date: <?php echo $results['date']; ?></p>
+	<p>Director: <?php echo $results['director']; ?></p>
 	
 	
 </body>
